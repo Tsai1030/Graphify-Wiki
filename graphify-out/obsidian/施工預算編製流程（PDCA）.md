@@ -1,0 +1,19 @@
+---
+source_file: "graphify-out/global_concepts.md"
+type: "document"
+community: "預算與成本管控"
+tags:
+  - graphify/document
+  - graphify/EXTRACTED
+  - community/預算與成本管控
+---
+
+# 施工預算編製流程（PDCA）
+
+## Connections
+- [[010302 施工預算規劃暨成本管控]] - `references` [EXTRACTED]
+- [[施工預算編製 PDCA 流程圖]] - `references` [EXTRACTED]
+- [[竣工結算與績效報告]] - `references` [EXTRACTED]
+- [[預算審查會]] - `references` [EXTRACTED]
+
+#graphify/document #graphify/EXTRACTED #community/預算與成本管控

@@ -1,0 +1,67 @@
+{
+  "corpus_root": "data_markdown",
+  "documents": 51,
+  "images_detected": 633,
+  "cache_hits": 51,
+  "model": "gpt-5.4-mini",
+  "nodes": 1642,
+  "edges": 3144,
+  "communities": 42,
+  "wiki_articles": 52,
+  "token_usage": {
+    "input": 298888,
+    "output": 224500
+  },
+  "top_god_nodes": [
+    {
+      "id": "concept_ab15bd9d11",
+      "label": "工務所",
+      "degree": 93
+    },
+    {
+      "id": "doc_data_markdown_020207_104_06_15_md_03a5a61517",
+      "label": "020207工地會議與管理(104.06.15新編內文)",
+      "degree": 66
+    },
+    {
+      "id": "doc_data_markdown_010102_104_07_30_md_b421cd27cb",
+      "label": "010102工務所辦公室設置",
+      "degree": 64
+    },
+    {
+      "id": "doc_data_markdown_010201_104_11_27_md_32cb6cf7c4",
+      "label": "電腦及軟體",
+      "degree": 56
+    },
+    {
+      "id": "doc_data_markdown_010301_104_08_14_md_b55ed44f42",
+      "label": "010301 施工場地佈置",
+      "degree": 56
+    },
+    {
+      "id": "doc_data_markdown_010314_104_06_30_md_13d2405a56",
+      "label": "010314 工地臨時水電",
+      "degree": 50
+    },
+    {
+      "id": "doc_data_markdown_020102_112_04_24_md_51853de398",
+      "label": "020102 協力廠商估驗及計價",
+      "degree": 45
+    },
+    {
+      "id": "doc_data_markdown_010309_104_06_15_md_bfddb099de",
+      "label": "010309 建管行政",
+      "degree": 43
+    },
+    {
+      "id": "doc_data_markdown_010302_105_01_08_md_74cc4a57d5",
+      "label": "010302 施工預算規劃暨成本管控",
+      "degree": 42
+    },
+    {
+      "id": "doc_data_markdown_020208_104_06_15_md_de3b24f2be",
+      "label": "020208 點工管理",
+      "degree": 41
+    }
+  ]
+}
