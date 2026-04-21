@@ -44,7 +44,10 @@ function tokenize(text: string) {
 }
 
 function buildSearchText(node: GraphNode) {
-  return [node.id, node.label, node.source_file, node.summary, node.norm_label].filter(Boolean).join(" ").toLowerCase();
+  return [node.id, node.label, node.source_file, node.summary, node.norm_label]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
 }
 
 function scoreNode(query: string, queryTokens: string[], node: GraphNode, degree: number) {
@@ -89,7 +92,7 @@ export function retrieveNodes(question: string, limit = 8): RetrievedNode[] {
     communityLabel:
       typeof node.community === "number"
         ? snapshot.labels[node.community] ?? `Community ${node.community}`
-        : "未分類",
+        : "Unknown",
     sourceFile: node.source_file ?? "",
     summary: node.summary ?? "",
     neighbors: getNeighbors(node.id, 8)
@@ -101,22 +104,23 @@ export function buildChatContext(question: string, retrieved: RetrievedNode[]) {
   const sources = new Set<string>();
   const sections: string[] = [];
 
-  sections.push("## Graph Report Summary");
-  sections.push(snapshot.report.slice(0, 2200));
+  if (snapshot.report) {
+    sections.push("## Graph Report Summary");
+    sections.push(snapshot.report.slice(0, 2200));
+  }
 
   for (const node of retrieved) {
     sections.push(
       [
-        `## Node`,
+        "## Node",
         `Label: ${node.label}`,
         `ID: ${node.id}`,
         `Community: ${node.communityLabel}`,
         `Source: ${node.sourceFile || "-"}`,
         `Summary: ${node.summary || "-"}`,
-        `Connections:`,
+        "Connections:",
         ...node.neighbors.map(
-          (neighbor) =>
-            `- ${node.label} --${neighbor.relation}/${neighbor.confidence}--> ${neighbor.label}`
+          (neighbor) => `- ${node.label} --${neighbor.relation}/${neighbor.confidence}--> ${neighbor.label}`
         )
       ].join("\n")
     );
@@ -166,7 +170,7 @@ export function getNodeDetails(nodeId: string) {
     communityLabel:
       typeof node.community === "number"
         ? snapshot.labels[node.community] ?? `Community ${node.community}`
-        : "未分類",
+        : "Unknown",
     neighbors: getNeighbors(nodeId, 16),
     snippet: node.source_file ? getMarkdownSnippet(node.source_file, 1800) : "",
     images: Array.from(imageMap.values()).filter(Boolean).slice(0, 12),

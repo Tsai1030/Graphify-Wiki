@@ -18,8 +18,8 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Graphify Command Deck",
-  description: "Interactive command center for your Graphify knowledge base."
+  title: "Graphify Atlas",
+  description: "A cinematic knowledge workspace for Graphify-powered documents, images, tables, and evidence."
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

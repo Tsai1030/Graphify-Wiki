@@ -4,15 +4,14 @@ import OpenAI from "openai";
 import { ensureRootEnvLoaded } from "@/lib/root-env";
 import { buildChatContext, getRetrievedImages, retrieveNodes } from "@/lib/retrieval";
 
-const SYSTEM_PROMPT = `你是企業內部知識庫助理。請只根據提供的 Graphify 知識圖譜上下文回答。
+const SYSTEM_PROMPT = `You are a Graphify-powered knowledge assistant.
 
-規則：
-- 先直接回答，再列出重點。
-- 如果問題是流程題，整理成步驟或清單。
-- 如果是責任或文件題，指出角色、文件、控制點。
-- 不要假裝看過沒有提供的內容。
-- 如果上下文不足，明確說明證據不足。
-- 使用繁體中文。`;
+Rules:
+- Answer only from the retrieved graph context and snippets.
+- If the evidence is incomplete, say so clearly instead of guessing.
+- Prefer concise, structured responses.
+- Mention related nodes or source files when they help the answer.
+- If the graph is empty, explain what the user needs to prepare next.`;
 
 export async function POST(request: NextRequest) {
   ensureRootEnvLoaded();
@@ -23,13 +22,14 @@ export async function POST(request: NextRequest) {
   };
 
   if (!question?.trim()) {
-    return NextResponse.json({ error: "Question is required" }, { status: 400 });
+    return NextResponse.json({ error: "Question is required." }, { status: 400 });
   }
 
   const retrieved = retrieveNodes(question, 8);
   if (!retrieved.length) {
     return NextResponse.json({
-      answer: "目前知識圖裡找不到明顯相關的節點，請換個關鍵字或把問題講得更具體一點。",
+      answer:
+        "No relevant graph evidence is available yet. Add your private corpus to `data_markdown/`, generate a graph into `graphify-out/`, and try again.",
       retrieved,
       sourceFiles: [],
       images: []
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
   const model = process.env.LLM_MODEL || "gpt-5.4-mini";
 
   if (!apiKey) {
-    return NextResponse.json({ error: "OPENAI_API_KEY is missing" }, { status: 500 });
+    return NextResponse.json({ error: "OPENAI_API_KEY is missing." }, { status: 500 });
   }
 
   const client = new OpenAI({ apiKey, timeout: 120000, maxRetries: 2 });
@@ -58,12 +58,7 @@ export async function POST(request: NextRequest) {
       })),
       {
         role: "user",
-        content: `使用者問題：${question}
-
-## Knowledge Graph Context
-${context}
-
-請根據上述內容回答，最後加上「來源」段落。`
+        content: `Question:\n${question}\n\n## Knowledge Graph Context\n${context}\n\nAnswer using the graph evidence above.`
       }
     ]
   });

@@ -17,7 +17,7 @@ export async function GET() {
       count,
       label:
         community === "unknown"
-          ? "未分類"
+          ? "Unknown"
           : snapshot.labels[Number(community)] ?? `Community ${community}`
     }))
     .sort((a, b) => b.count - a.count);
@@ -25,6 +25,7 @@ export async function GET() {
   return NextResponse.json({
     summary: snapshot.runSummary,
     communities: communityEntries.slice(0, 16),
-    reportExcerpt: snapshot.report.slice(0, 1800)
+    reportExcerpt: snapshot.report.slice(0, 1800),
+    hasGraphData: snapshot.nodes.length > 0
   });
 }

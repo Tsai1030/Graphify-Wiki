@@ -6,12 +6,15 @@
 __pycache__/
 *.pyc
 
+.codex/
+data_markdown/
+graphify-out/
+
 frontend/node_modules/
 frontend/.next/
 frontend/.turbo/
 frontend/out/
 
-graphify-out/cache/
 graphify_repo/
 
 .DS_Store

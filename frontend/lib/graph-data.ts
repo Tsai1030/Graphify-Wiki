@@ -75,6 +75,14 @@ const ROOT = path.resolve(process.cwd(), "..");
 const GRAPH_ROOT = path.join(ROOT, "graphify-out");
 
 let cachedSnapshot: GraphSnapshot | null = null;
+const EMPTY_SNAPSHOT: GraphSnapshot = {
+  nodes: [],
+  links: [],
+  hyperedges: [],
+  labels: {},
+  report: "",
+  runSummary: null
+};
 
 function readJson<T>(filePath: string): T {
   return JSON.parse(fs.readFileSync(filePath, "utf-8")) as T;
@@ -139,11 +147,17 @@ export function inferMimeType(relativePath: string) {
 export function getGraphSnapshot(): GraphSnapshot {
   if (cachedSnapshot) return cachedSnapshot;
 
+  const graphPath = path.join(GRAPH_ROOT, "graph.json");
+  if (!fs.existsSync(graphPath)) {
+    cachedSnapshot = { ...EMPTY_SNAPSHOT };
+    return cachedSnapshot;
+  }
+
   const graph = readJson<{
     nodes: GraphNode[];
     links: GraphLink[];
     hyperedges?: GraphSnapshot["hyperedges"];
-  }>(path.join(GRAPH_ROOT, "graph.json"));
+  }>(graphPath);
 
   const labelsRawPath = path.join(GRAPH_ROOT, ".graphify_labels.json");
   const labelsRaw = fs.existsSync(labelsRawPath) ? readJson<Record<string, string>>(labelsRawPath) : {};
