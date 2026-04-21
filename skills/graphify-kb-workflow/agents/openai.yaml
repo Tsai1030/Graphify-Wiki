@@ -1,0 +1,4 @@
+interface:
+  display_name: "Graphify KB Workflow"
+  short_description: "Build Graphify from Markdown and browse it in app or Obsidian."
+  default_prompt: "Use $graphify-kb-workflow to set up Graphify, build a graph from a Markdown corpus, and prepare Obsidian browsing."
